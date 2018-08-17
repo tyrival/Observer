@@ -5,7 +5,7 @@ class DataStore extends Observer {
     super();
     const me = this;
     // 定义监听
-    me.observe = function(data, prop, router) {
+    me.observer = function(data, prop, router) {
       // 确保监听对象是Object
       if (Object.prototype.toString.call(data) === "[object Object]") {
 
@@ -43,21 +43,21 @@ class DataStore extends Observer {
 
             // 遍历属性，增加监听
             for (let key in val) {
-              me.observe(val, key, $router);
+              me.observer(val, key, $router);
             }
             me.notify($router, me.getData($router));
           }
         });
         for (let key in val) {
           // 递归监听
-          me.observe(val, key, router);
+          me.observer(val, key, router);
         }
       }
     };
     // 初始化data存储
     me.data = (config && config.data) || {};
     // 启用监听
-    me.observe(me, "data");
+    me.observer(me, "data");
   }
 
   /**
@@ -92,7 +92,7 @@ class DataStore extends Observer {
       path = "/" + path;
     }
     this.data[name] = data || {}
-    this.observe(this.data, name, path);
+    this.observer(this.data, name, path);
   }
 
   /**
